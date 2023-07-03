@@ -11,9 +11,13 @@ function User(name){
     this.isAdmin=false;
 }
 let user = new User("jack");
+let anotherUser = new User("ann");
+let otherUser = new User("sia")
 
 console.log(user.name); // jack
-console.log(user.admin);// false
+console.log(user.isAdmin);// false
+console.log(anotherUser.name);//ann
+console.log(otherUser.name);//sia
 
 // when function is executed with new it does the following step;
 //1-> a new empty object is created and assigned to "this"
@@ -48,6 +52,37 @@ let user1 = new function(){ // creating function and immediately call it with ne
 };
 // but this constructor function cant be called again because it is not saved anywhere, just created and called.
 
+//----------->new.target
+// inside function we can check whether it was called with new or without it using new.target
+
+function see(){
+    console.log(new.target);
+}
+see(); // it give undefined
+
+new see(); 
+/* output of new see() =>
+ ƒ see(){
+    console.log(new.target);
+} */
+
+// function User(name){
+//     this.name = name;
+// }
+// let john = User("john");
+// console.log(john.name); // it is giving error 
+
+//now in above code if we add new
+function UserNew(name){
+if(!new.target){ // if it run without new
+    return new UserNew(name); // add new 
+}
+this.name =name;
+}
+let joe = UserNew("joe");
+console.log(joe.name); // joe
+
+
 ///------------>Return from constructor
 /* ususally constructor dont have return statement. Their task is to write all necessary stuff into "this"
 and it will automatically become result.
@@ -63,3 +98,24 @@ function BigUser(){
 }
 console.log(new BigUser().name); // ram got that object
 
+// and with empty return
+
+function SmallUser(){
+    this.name="john";
+    return;
+}
+console.log(new SmallUser().name);// john
+
+// Method in constructor
+// we can add "this" to method also
+
+function foo(name){
+    this.name = name; // properties
+    this.isAdmin = true;
+
+    this.sayHi = function(){ // method
+        console.log("My name is: "+ this.name);
+    };
+}
+let john = new foo("john");
+john.sayHi();

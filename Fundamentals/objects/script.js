@@ -158,3 +158,13 @@ let obj = {
 
 // NOTE -> There are cases when structuredClone fails for eg when object has function property fo rthat we can
 //use  _.cloneDeep(obj) from the JavaScript library
+
+
+/*Only two primitive types may serve as object Property keys:
+-> string type
+-> symbol type
+
+if one uses another type such as number, its autoconverted to string. so that obj[1] is the same as obj["1"] 
+and obj[true] is same as obj["true"]
+*/
+
